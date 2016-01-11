@@ -1,4 +1,4 @@
-(function(){
+function(){
 
   var functionQueue = [];
 
@@ -10,7 +10,7 @@
     })
   }
 
-  var $l = window.$l  = function(arg){
+  var $l = window.$l = function(arg){
 
     if (typeof arg === 'string'){
        queryResult = [].slice.call(document.querySelectorAll(arg));
@@ -72,7 +72,7 @@
     if (typeof value === "undefined") {
       var firstEl = this.htmlElements[0];
       var myAttributes = firstEl.attributes;
-      return myAttributes[attributeName];
+      return myAttributes[attributeName].value;
     }
     this.htmlElements.forEach( function(el) {
       el.setAttribute(attributeName, value);
@@ -123,6 +123,7 @@
     });
     return new DomNodeCollection(parents);
   };
+
   DomNodeCollection.prototype.find = function(selector) {
 
     var allMatched = [].slice.call(document.querySelectorAll(selector));
@@ -135,6 +136,11 @@
 
     return new DomNodeCollection(matchedChildren);
 
+  };
+
+  DomNodeCollection.prototype.lastChild = function() {
+    var lastChild = [this.children().htmlElements.slice(-1)[0]];
+    return new DomNodeCollection(lastChild);
   }
 
   DomNodeCollection.prototype.remove = function () {
